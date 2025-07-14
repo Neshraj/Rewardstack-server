@@ -39,11 +39,21 @@ export const claimPoints = async (req, res) => {
     });
     await history.save();
 
+    //Emit WebSocket event to update leaderboard in real-time
+    const io = req.app.get('io');
+    io.emit('pointsClaimed', {
+      userId: user._id,
+      name: user.name,
+      totalPoints: user.totalPoints,
+      points,
+    });
+
     res.json({ message: 'Points claimed!', points });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
+
 
 // Get leaderboard (sorted by totalPoints desc)
 export const getLeaderboard = async (req, res) => {
