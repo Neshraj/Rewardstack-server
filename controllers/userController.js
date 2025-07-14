@@ -48,7 +48,7 @@ export const claimPoints = async (req, res) => {
       points,
     });
 
-    res.json({ message: 'Points claimed!', points,'name':user.name });
+    res.json({ message: 'Points claimed!', points,name:user.name });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
